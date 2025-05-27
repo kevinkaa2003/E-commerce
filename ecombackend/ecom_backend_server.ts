@@ -7,11 +7,11 @@ const express = require('express'); //Import Express
 
 const axios = require('axios'); //Import axios
 const jwt = require('jsonwebtoken'); //Web Token
-const SECRET_KEY = process.env.JWT_SECRET || "Frambleton3!"; //Store secret key in .env file\
+const SECRET_KEY = process.env.JWT_SECRET || ""; //Store secret key in .env file\
 const dotenv = require('dotenv'); //Load Environment Variables
 dotenv.config(); //Load Environment variables
 const cookieParser = require('cookie-parser'); //Needed to parse cookies
-const ALPHA_VANTAGE_KEY = 'UGI5N3WT6XJKZHYT'; //Alpha Vantage API Key
+const ALPHA_VANTAGE_KEY = ''; //Alpha Vantage API Key
 const { Pool } = require('pg'); //Database Connection
 const cors = require('cors'); //Cross-Origin Requests
 const corsOptions = {
@@ -73,7 +73,7 @@ const authenticateToken = (req, res, next) => {
 const db = new Pool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'Frambleton3!',
+    password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'postgres',
     port: process.env.DB_PORT || 5432,
 });
