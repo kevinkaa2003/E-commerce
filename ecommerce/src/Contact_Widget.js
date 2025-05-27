@@ -7,7 +7,7 @@ const ContactWidget = () => {
     const form = useRef(); 
 
     useEffect (() => {
-        emailjs.init("");
+        emailjs.init(""); //Initilization Key
     }, []);
 
     const sendEmail = (e) => {
