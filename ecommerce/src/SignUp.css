@@ -1,0 +1,46 @@
+.signupformmain{
+    background: url('./beijing2.jpeg') no-repeat center;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center; /*Center container horizontally*/
+    
+}
+.signupform {
+    align-self: center; /*Center container vertically*/
+    align-content: center; /*Center Children vertically*/
+    background-color: rgb(52, 50, 50, 0.75);
+    border-radius: 15px;
+    height: 50vh;
+    width: 25vw;
+  
+}
+.signupwrapper{
+    color: white;
+}
+input {
+    width: 15vw;
+    height: 3vh;
+    border-radius: 5px;
+}
+
+.signupbutton{
+    background-color: black;
+    width: 15vw;
+    height: 3vh;
+    color: white;
+    border-radius: 5px;
+}
+.signupbutton:hover{
+    background-color: white;
+    color: black;
+}
+strong {
+    font-size: 35px;
+    color: white;
+}
+.signupmessage {
+    color: white;
+}

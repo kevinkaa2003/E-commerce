@@ -1,0 +1,53 @@
+.mainwrapper {
+    background: url('./beijing2.jpeg') no-repeat center;
+    background-size: cover;
+    width: 100vw;
+    height: 2000px;
+}
+
+.profilemain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+
+}
+.profilewrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    background-color: rgb(52, 50, 50, 0.75);
+    max-width: 1140px;
+    padding: 0 1rem;
+    width: 100%;
+    height: 1500px;
+    box-shadow: none;
+    border-radius: 15px;
+    padding: 100px;
+    text-align: left;
+}
+.label-above {
+    display: block;
+    margin-bottom: 5px;
+    margin-right: 100%;
+}
+.profilewrapperstrong {
+    margin-right: 100%;
+    
+}
+.profilewrapper input {
+    display: block;
+    
+    margin-left: 0 auto;
+}
+.profilewrapper label {
+    color: white;
+    text-decoration: underline;
+    width: 100%;
+}
+
+.profilewrapper p {
+    color: white;
+}
+

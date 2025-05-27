@@ -1,0 +1,15 @@
+.product-card img {
+    height: 500px;
+    width: 500px;
+}
+.product-grid p  {
+    color: white;
+}
+
+.addtocart {
+    background-color: rgb(43, 43, 233);
+}
+
+.addtocart:hover{
+    background-color:rgb(106, 106, 234);
+}

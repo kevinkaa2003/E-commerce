@@ -1,0 +1,104 @@
+import './Login.css';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { DataContext } from './DataProvider.js';
+
+
+const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+    const [ userLoggedIn, setUserLoggedIn ] = useState(DataContext);
+  
+
+    const loginAttempt = async (e) => {
+        e.preventDefault(); //Prevent page reload
+
+        try {
+            const response = await fetch('http://localhost:5000/login', 
+                { 
+                method: 'POST', //POST Method for login
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', //This allows cookies to be sent and received
+                body: JSON.stringify({ username, password }) //Sending credentials
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Login successful');
+                setUserLoggedIn(true);
+                localStorage.setItem('userLoggedIn', 'true');
+                console.log(userLoggedIn);
+                navigate('/');
+                setMessage("Login successful! Redirecting..."); //Redirect User or Store Session Token
+                
+            } else {
+                setMessage("Incorrect username or password.");
+
+            } 
+            } catch (error) {
+                setMessage("Error logging in. Please try again.");
+                console.error("Login error:", error.response ? error.response.data : error.message);
+            }
+        }
+        
+    const goToSignUp = async (e) => {
+        e.preventDefault(); //Prevent Page Reload
+
+        navigate('/SignUp');
+    }
+    
+    return (
+    <>
+    
+        <div className='loginformmain'>
+            <div className='loginform'>
+                <div className='loginwrapper'> 
+                    <strong>Login</strong>
+                    <br/>
+                    <br/>
+                    <form onSubmit={loginAttempt}>
+                        <br/>
+                        <label for="Username">Your Username</label>
+                        <br/>
+                        <input id="Username" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)}>
+                        
+                        </input>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <label for="Password">Your Password</label>
+                        <br/>
+                        <input id="Password" type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}>
+                        </input>
+                        <br/>
+                        <br/>
+                        <button type='submit' className='submitbutton'>Sign In</button>
+                        <br/>
+                        <br/>
+                        <p>Need an Account? </p> <button className='signupbutton' onClick={goToSignUp}>Sign Up</button>
+                        <br/>
+                    </form>
+                    
+                </div>
+                <div className='loginmessage'>
+                    <br/>
+                    <br/>
+                    <br/>
+                {message && <p>{message}</p>}
+            </div>
+            </div>
+            
+        </div>
+    
+    </>
+        
+    );
+}   
+export default Login;
