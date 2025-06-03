@@ -1,18 +1,19 @@
 body {
-    background: url('./tokyo1.jpg') no-repeat center;
+    background: url('./tokyo2.jpg') no-repeat center;
     background-size: cover;
 }
 .cartmain {
     display: flex;
-    margin-top: 5%;
-    margin-left: 35%;
+    margin-top: 100px;
+    margin-left: 300px;
+    margin-bottom: 100px;
     justify-content: space-between;
     gap: 100px;
     align-items: center;
     text-align: center;
     height: 50%;
     width: 35%;
-    
+
 }
 .paymentinfo {
     display: flex;
@@ -20,25 +21,42 @@ body {
     align-items: center;
     text-align: center;
     background-color: rgb(52, 50, 50, 0.75);
-    height: 500px;
-    width: 500px;
+    height: auto;
+    min-height: 500px;
+    min-width: 500px;
     border-radius: 5%;
+    padding-bottom: 50px;
+}
+.paymenttitle {
+    margin-top: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
 }
 .cartinfo {
     display: flex;
-    color:black;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
     background-color: rgb(52, 50, 50, 0.75);
-    height: 500px;
-    width: 500px;
+    height: auto;
+    min-height: 500px;
+    min-width: 500px;
     border-radius: 5%;
-   
+    padding-top: 25px;
+
+
 }
-.cartproduct p {
-    color:white;
-    
+
+.cartinfo span {
+    color: white;
+}
+
+.cartproduct {
+    padding-left: 50px;
+    text-align: left;
+}
+.carttotal {
+    padding-left: 50px;
+    text-align: left;
 }
 
 label {
@@ -48,15 +66,33 @@ label {
 }
 
 .carttotal {
+    display: flex;
     color: white;
+    font-size: 25px;
+    border-top: 2px solid white;
+    width: 80%;
+    margin-left: 50px;
+    padding-left: 125px;
+}
+.carttitle {
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+
 }
 
-.deletecart {
+.deletecart button {
     color: white;
+    font-weight: bold;
     background-color: rgb(43, 43, 233);
     border-radius: 5%;
+    width: 300px;
+    max-height: 50px;
+    margin-bottom: 25px;
+    line-height: 30px;
 }
 
-.deletecart:hover {
+
+.deletecart button:hover {
     background-color:  rgb(106, 106, 234);
 }

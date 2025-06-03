@@ -31,7 +31,7 @@ to {
 }
 
 .expand-height {
-    animation: expandHeight 1.0s ease-in-out; 
+    animation: expandHeight 1.0s ease-in-out;
 }
 
 a {
@@ -56,12 +56,12 @@ button {
     min-width: 100px;
     padding: 10px;
     font-family: sans-serif;
-    
+
 
 }
 .navbar button:hover {
    color: rgb(137, 134, 228);
-    
+
 }
 
 
@@ -81,10 +81,10 @@ button {
 }
 
 .navbarcomponents {
-    margin-left: 23%;
+    margin-left: 10%;
     display: flex;
     gap: 100px;
-    
+
 }
 .search {
     display: flex;
@@ -99,15 +99,24 @@ button {
     position: absolute;
     z-index: 10;
     background-color: rgb(118, 124, 252);
+    border-radius: 3px;
+    padding: 5px;
+    width: 230px;
 }
 .search-results a {
     display: block;
     padding: 5px;
     text-decoration: none;
     color: white;
+    text-align:left;
 }
 .search-results a:hover {
     background-color: rgb(118, 218, 252);
+}
+.noresultsdiv {
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
 }
 .navbarhome {
     position: relative;
@@ -117,7 +126,7 @@ button {
     color: rgb(51, 61, 254);
 }
 .navbarhome:hover .navbarhomebtn { /*Hover Animation (Scale) */
-    
+
 }
 .navbarhomebtn a {
     font-size: medium;
@@ -292,7 +301,7 @@ button {
     font-size: medium;
     overflow: hidden;
     transition: height 1s ease-out;
-    
+
 }
 .dropdown-content-about .dropdowngoals {
     left: 200px; /* Adjust this value based on your layout */
@@ -305,7 +314,7 @@ button {
     color: white;
 }
 .dropdowncontactbtn {
-    font-size: medium;
+    font-size: 20px;
     font-weight: 200;
     color: white;
     text-decoration: none;
@@ -400,5 +409,3 @@ button {
 .navbar button {
     color: white;
 }
-
-

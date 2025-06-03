@@ -1,6 +1,47 @@
-.product-card img {
-    height: 500px;
+.shopwrapper {
+    padding-bottom: 100px;
+    background: url('./tokyo2.jpg') no-repeat;
+    background-size: cover;
+}
+.shoptitle {
+    padding-top: 25px;
+    display: flex;
+    background-color: white;
+    height: 75px;
+    padding-bottom: 75px;
+    justify-content: center;
+
+}
+
+.shoptitle strong {
+    font-size: 50px;
+    color: rgb(82, 82, 246);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, auto);
+    column-gap: 0px;
+    padding-left: 150px;
+
+}
+
+.product-card {
+    padding-bottom: 100px;
+    margin-top: 100px;
+    background-color: rgb(127, 127, 241);
     width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: visible;
+    padding-top: 50px;
+}
+
+.product-card img {
+    height: 300px;
+    width: 300px;
+    border-radius: 20px;
 }
 .product-grid p  {
     color: white;
@@ -8,6 +49,7 @@
 
 .addtocart {
     background-color: rgb(43, 43, 233);
+    color: white;
 }
 
 .addtocart:hover{

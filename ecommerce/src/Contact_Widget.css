@@ -1,7 +1,7 @@
 .mainwrapper {
     background: url('./beijing3.jpeg') no-repeat center; /*CHANGE */
     background-size: cover;
-   
+
     width: 100vw;
     height: 100vh;
 
@@ -9,5 +9,10 @@
 
 .submitbuttoncontainer button {
     background-color: rgb(39, 39, 151);
-    
+    height: 100%;
+
+}
+
+.form-label {
+    margin-left: 0;
 }

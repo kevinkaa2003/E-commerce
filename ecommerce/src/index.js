@@ -7,14 +7,21 @@ import { BrowserRouter } from 'react-router-dom';
 import { DataProvider } from './DataProvider.js';
 
 
+//Page refresh handling
+if (!sessionStorage.getItem('appHasLaunched')) {
+  sessionStorage.setItem('appHasLaunched', 'true'); //Set 'appHasLaunched' to 'true' when website launches
+  localStorage.setItem('userLoggedIn', 'false'); //Set userLoggedIn to false on render
+}
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <DataProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <DataProvider>
         <App />
-      </BrowserRouter>
-   </DataProvider>
+      </DataProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

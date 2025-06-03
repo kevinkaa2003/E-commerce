@@ -1,18 +1,28 @@
+
 .mainwrapper {
-    background: url('./beijing2.jpeg') no-repeat center;
-    background-size: cover;
-    width: 100vw;
-    height: 2000px;
+     background: url('./beijing2.jpeg') no-repeat center center / cover !important;
+     height: 100%;
 }
 
 .profilemain {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    
+    margin-bottom: 300px;
 
 }
+.profilewrapper button {
+    margin-left: 23%;
+    width: 500px;
+    height: 65px;
+    background-color: rgb(110, 110, 239);
+    font-weight: bold;
+    color: white;
+}
+.profilewrapper button:hover {
+    background-color: rgb(177, 177, 246);
+}
+
 .profilewrapper {
     display: flex;
     flex-direction: column;
@@ -21,7 +31,7 @@
     max-width: 1140px;
     padding: 0 1rem;
     width: 100%;
-    height: 1500px;
+    height: 1700px;
     box-shadow: none;
     border-radius: 15px;
     padding: 100px;
@@ -29,25 +39,73 @@
 }
 .label-above {
     display: block;
-    margin-bottom: 5px;
     margin-right: 100%;
 }
-.profilewrapperstrong {
+.profilewrapper strong {
+    font-size: 50px;
     margin-right: 100%;
-    
+
 }
 .profilewrapper input {
     display: block;
-    
+
     margin-left: 0 auto;
 }
 .profilewrapper label {
     color: white;
+    size: 50px;
     text-decoration: underline;
     width: 100%;
 }
 
-.profilewrapper p {
+.profilewrapper span {
     color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    width: 100%;
 }
 
+.profilewrapper label {
+    margin-left: 5%;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.contactinfo {
+    font-weight: bold;
+}
+.profilewrapper span {
+    margin-left: 5%;
+    font-size: 20px;
+}
+.profiletitle {
+    display: flex;
+    font-size: 75px;
+    font-weight: bold;
+    color: white;
+    justify-content: center;
+}
+.profilewrapper input {
+    margin-left: 5%;
+}
+
+.deleteprofileconfirmation {
+    display: block;
+    margin-left: 18%;
+    z-index: 100000;
+    background-color: rgb(52, 50, 50, 0.75);
+    height: 600px;
+    width: 600px;
+    padding-bottom: 50px;
+    border-radius: 10px;
+}
+
+.deleteprofileconfirmation button {
+    margin-left: 25%;
+    width: 300px;
+}
+
+.deleteprofileconfirmation span {
+    margin-left: 15%;
+}

@@ -4,21 +4,25 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { DataContext } from './DataProvider.js';
 
-
+//Login component
 const Login = () => {
+
+    //Declare login variables
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
-    const [ userLoggedIn, setUserLoggedIn ] = useState(DataContext);
-  
+    const { userLoggedIn, setUserLoggedIn } = useContext(DataContext);
 
+
+    //Login attempt function
     const loginAttempt = async (e) => {
         e.preventDefault(); //Prevent page reload
 
+        //POST request
         try {
-            const response = await fetch('http://localhost:5000/login', 
-                { 
+            const response = await fetch('http://localhost:5000/login',
+                {
                 method: 'POST', //POST Method for login
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,8 +32,10 @@ const Login = () => {
                 }
             );
 
+
             const data = await response.json();
 
+            //Valid response check
             if (response.ok) {
                 console.log('Login successful');
                 setUserLoggedIn(true);
@@ -37,29 +43,28 @@ const Login = () => {
                 console.log(userLoggedIn);
                 navigate('/');
                 setMessage("Login successful! Redirecting..."); //Redirect User or Store Session Token
-                
-            } else {
-                setMessage("Incorrect username or password.");
 
-            } 
+            } else { //Inavlid response
+                setMessage("Incorrect username or password.");
+            }
+
             } catch (error) {
                 setMessage("Error logging in. Please try again.");
                 console.error("Login error:", error.response ? error.response.data : error.message);
             }
         }
-        
+
+    //Go to signup page
     const goToSignUp = async (e) => {
         e.preventDefault(); //Prevent Page Reload
-
         navigate('/SignUp');
     }
-    
+
     return (
-    <>
-    
+        <>
         <div className='loginformmain'>
             <div className='loginform'>
-                <div className='loginwrapper'> 
+                <div className='loginwrapper'>
                     <strong>Login</strong>
                     <br/>
                     <br/>
@@ -68,7 +73,7 @@ const Login = () => {
                         <label for="Username">Your Username</label>
                         <br/>
                         <input id="Username" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)}>
-                        
+
                         </input>
                         <br/>
                         <br/>
@@ -85,7 +90,7 @@ const Login = () => {
                         <p>Need an Account? </p> <button className='signupbutton' onClick={goToSignUp}>Sign Up</button>
                         <br/>
                     </form>
-                    
+
                 </div>
                 <div className='loginmessage'>
                     <br/>
@@ -94,11 +99,8 @@ const Login = () => {
                 {message && <p>{message}</p>}
             </div>
             </div>
-            
         </div>
-    
     </>
-        
     );
-}   
+}
 export default Login;

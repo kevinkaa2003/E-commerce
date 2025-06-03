@@ -1,23 +1,28 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Custom_Navbar';
+import CustomFooter from './Custom_Footer.js';
 import { DataContext } from './DataProvider.js';
 import axios from 'axios';
 import './Profile.css'; //CSS
 
 
 const Profile = () => {
-    
-    const { userLoggedIn, setUserLoggedIn } = useContext(DataContext); 
+
+    //Declare all profile variables
+    const { userLoggedIn, setUserLoggedIn } = useContext(DataContext);
     const { editProfile, setEditProfile } = useContext(DataContext);
     const [ firstName, setFirstName ] = useState('');
     const [ lastName, setLastName ] = useState('');
     const [ street, setStreet ] = useState('');
     const [ apartment, setApartment ] = useState('');
     const [ city, setCity ] = useState('');
-    const [ stateProvince, setStateProvince ] = useState(''); 
+    const [ stateProvince, setStateProvince ] = useState('');
     const [ country, setCountry ] = useState('');
     const [ phone, setPhone ] = useState('');
-    const [ email, setEmail ] = useState(''); 
+    const [ email, setEmail ] = useState('');
+    const [ showDeletePopup, setShowDeletePopup ] = useState(false);
+    const navigate = useNavigate();
 
     //Edit button switch handler
     const editProfileHandler = () => {
@@ -32,9 +37,10 @@ const Profile = () => {
         }
     }
 
+    //Populate Profile Function
     const populateProfile = async (e) => {
-       
 
+        //Obtain Profile data from backend
         try {
 
             const response = await fetch('http://localhost:5000/profile',
@@ -43,7 +49,7 @@ const Profile = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                    }, 
+                    },
                     credentials: 'include', //Allow cookies to be sent and received
                 })
 
@@ -54,7 +60,8 @@ const Profile = () => {
 
             const data = await response.json(); //Properly parse response
             console.log("Profile Data Received: ", data);
-            
+
+            //Set Profile variables from data acquired
             if (data.success) {
 
                 //Set states for the received profile data
@@ -62,36 +69,39 @@ const Profile = () => {
                     setFirstName(data.data["First Name"]),
                     setLastName(data.data["Last Name"]),
                     setStreet(data.data["Street"]),
-                    setApartment(data.data["Apartment"]), 
+                    setApartment(data.data["Apartment"]),
                     setCity(data.data["City"]),
                     setStateProvince(data.data["State/Province"]),
                     setCountry(data.data["Country"]),
                     setPhone(data.data["Phone"]),
-                    setEmail(data.data["Email"]), 
+                    setEmail(data.data["Email"]),
                     ])
             } else {
                 console.error("Profile data retrieval failed: ", data.message);
-            }     
+            }
         } catch (error) {
-            console.error("Could not Populate Profile Data: ", error); 
-            
+            console.error("Could not Populate Profile Data: ", error);
+
         }
     };
-        
-        
-        
-    
 
-    //Call Populate Profile only when not editing
-    if (editProfile === false) {
-        populateProfile()
-    }
 
+
+
+    //Call populateProfile when editProfile is false
+    useEffect(() => {
+        if (!editProfile) {
+            populateProfile();
+        }
+    }, [editProfile]);
+
+    //sendProfileInfo Function
     const sendProfileInfo = async (e) => {
         e.preventDefault(); //Prevent page reload
 
+        //Post request to send profile info to backend to be entered into database
         try {
-            const response = await fetch('http://localhost:5000/profile', 
+            const response = await fetch('http://localhost:5000/profile',
             {
                 mode: 'cors',
                 method: 'POST',
@@ -100,18 +110,19 @@ const Profile = () => {
                 },
                 credentials: 'include', //Allow cookies to be sent and received
                 body: JSON.stringify({
-                    firstName, 
-                    lastName, 
-                    street, 
-                    apartment, 
-                    city, 
-                    stateProvince, 
+                    firstName,
+                    lastName,
+                    street,
+                    apartment,
+                    city,
+                    stateProvince,
                     country,
                     phone,
-                    email 
+                    email
                 })
             });
-         
+
+            //If a valid response is returned, set editProfile to false.
             if(response.ok) {
                 setEditProfile(false);
                 console.log("Profile Updated Successfully!");
@@ -119,60 +130,121 @@ const Profile = () => {
             } else {
                 console.log("Profile Could Not be Updated.")
 
-            } 
+            }
         } catch (error) {
             console.error("Error updating profile: ", error);
         }
     }
 
+    //Delete profile initation function: Displays delete profile <div>
+    const deleteProfileInitiation = () => (
+        <>
+        <br/>
+        <br/>
+            <div className='deleteprofileconfirmation'>
+                <br/>
+                <span>Are you sure you want to delete your profile?</span>
+                <br/>
+                <br/>
+                <button className='deleteyes' onClick={() => {
+                    deleteProfileAuthorization(true)}}>Yes</button>
+                <br/>
+                <br/>
+                <button className='deleteno' onClick={() => {
+                    deleteProfileAuthorization(false)}}>No</button>
+            </div>
+        </>
+        );
+
+    //Delete profile authorization function
+    const deleteProfileAuthorization = async (shouldDelete) => {
+
+
+        if (shouldDelete) {
+
+
+            //Post request to remove profile data
+            try {
+
+                const response = await fetch('http://localhost:5000/deleteprofile',
+                    {
+                        mode: 'cors',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include', //Allow cookies to be sent and received
+                    })
+
+                if (!response.ok) {
+                    console.error("Profile Deletion Failed: ", response.statusText);
+                    return;
+                } //Valid response navigates user back to Login page
+                    alert('Profile Deleted');
+                    navigate('/Login');
+
+            } catch (error) {
+                console.error("Error Deleting Profile:", error);
+            }
+        } else { //If shouldDelete argument is false, set showDeletePopup to false
+            setShowDeletePopup(false);
+        }
+    };
+
     return (
-    
+
     <>
     <Navbar/>
     <div className='mainwrapper'>
         {editProfile === true ? ( //Check to see if user is editing profile
+        <>
             <div className="profilemain">
                     <div className='profilewrapper'>
-                        <strong>Profile</strong>
+                        <div className='profiletitle'>Profile</div>
                         <br/>
                         <br/>
-                        <button onClick = {editProfileHandler}>Edit Profile</button> 
-                        <button onClick={sendProfileInfo}>Save Profile</button>
+                        <br/>
+                        <br/>
+                        <button onClick = {editProfileHandler} className='editprofilebutton'>Edit Profile</button>
+                        <br/>
+                        <br/>
+                        <button onClick={sendProfileInfo} className='saveprofilebutton'>Save Profile</button>
                         <br/>
                         <br/>
                         <div className='personalinfo'>
                             <strong>Personal Information</strong>
                             <br/>
                             <br/>
+                            <br/>
                             <div>
-                                <label for='firstname' className='label-above'>First Name</label>
+                                <label for='firstname' className='label-above'>First Name:</label>
+                                <br/>
                                 <input type='text' id='firstname' value={firstName} onChange={(e) => setFirstName(e.target.value)}></input>
                             </div>
                             <br/>
+                            <label for='lastname' className='label-above'>Last Name:</label>
                             <br/>
-                            <label for='lastname' className='label-above'>Last Name</label>
                             <input type='text' id='lastname'value={lastName} onChange={(e) => setLastName(e.target.value)}></input>
                             <br/>
+                            <label for='street' className='label-above'>Street:</label>
                             <br/>
-                            <label for='street' className='label-above'>Street</label>
                             <input type='text' id='street' value={street} onChange={(e) => setStreet(e.target.value)}></input>
                             <br/>
+                            <label for='apartment' className='label-above'>Apartment:</label>
                             <br/>
-                            <label for='apartment' className='label-above'>Apartment</label>
                             <input type='text' id='apartment' value={apartment} onChange={(e) => setApartment(e.target.value)}></input>
                             <br/>
+                            <label for='city' className='label-above'>City:</label>
                             <br/>
-                            <label for='city' className='label-above'>City</label>
                             <input type='text' id='city' value={city} onChange={(e) => setCity(e.target.value)}></input>
                             <br/>
+                            <label for='stateprovince' className='label-above'>State/Province:</label>
                             <br/>
-                            <label for='stateprovince' className='label-above'>State/Province</label>
                             <input type='text' id='stateprovince' value={stateProvince} onChange={(e) => setStateProvince(e.target.value)}></input>
                             <br/>
+                            <label for='country' className='label-above'>Country:</label>
                             <br/>
-                            <label for='country' className='label-above'>Country</label>
                             <input type='text' id='country' value={country} onChange={(e) => setCountry(e.target.value)}></input>
-                            <br/>
                             <br/>
                             <br/>
                         </div>
@@ -180,72 +252,74 @@ const Profile = () => {
                             <strong>Contact Information</strong>
                             <br/>
                             <br/>
-                            <label for='phone' className='label-above'>Phone</label>
+                            <br/>
+                            <label for='phone' className='label-above'>Phone:</label>
+                            <br/>
                             <input type='phone' id='phone' value={phone} onChange={(e) => setPhone(e.target.value)}></input>
                             <br/>
+                            <label for='email' className='label-above'>E-mail:</label>
                             <br/>
-                            <label for='email' className='label-above'>E-mail</label>
                             <input type='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
                             <br/>
                             <br/>
                         </div>
                     </div>
-            </div> 
-        ) : ( 
+            </div>
+            <CustomFooter/>
+            </>
+        ) : (<>
             <div className="profilemain">
                 <div className="profilewrapper">
-                    <strong>Profile</strong>
+                    <div className='profiletitle'>Profile</div>
+                    <br/>
                     <br/>
                     <br/>
                     <button onClick = {editProfileHandler}>Edit Profile</button>
                     <br/>
                     <br/>
+                    <button onClick={() => setShowDeletePopup(true)}>Delete Profile</button>
+                    {showDeletePopup && deleteProfileInitiation()}
+                    <br/>
+                    <br/>
+                    <br/>
                     <strong>Personal Information</strong>
                     <br/>
                     <br/>
-                    <label>First Name</label>
-                    <p>{firstName}</p>{/*RETRIEVED FROM BACKEND QUERY*/}
                     <br/>
-                    <br/>
-                    <label>Last Name</label>
-                    <p>{lastName}</p> {/*RETRIEVED FROM BACKEND QUERY*/}
-                    <br/>
-                    <br/>
-                    <label>Street</label>
-                    <p>{street}</p> {/*RETRIEVED FROM BACKEND QUERY*/}
-                    <br/>
-                    <br/>
-                    <label>Apartment</label>
-                    <p>{apartment}</p> {/*RETRIEVED FROM BACKEND QUERY*/}
-                    <br/>
-                    <br/>
-                    <label>City</label> 
-                    <p>{city}</p> {/*RETRIEVED FROM BACKEND QUERY*/}
-                    <br/>
-                    <br/>
-                    <label>State/Province</label>
-                    <p>{stateProvince}</p> {/*RETRIEVED FROM BACKEND QUERY*/}
-                    <br/>
-                    <br/>
-                    <label>Country</label>
-                    <p>{country}</p> {/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>First Name:</label>
+                    <span>{firstName}</span>{/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>Last Name:</label>
+                    <span>{lastName}</span> {/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>Street:</label>
+                    <span>{street}</span>{/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>Apartment:</label>
+                    <span>{apartment}</span> {/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>City:</label>
+                    <span>{city}</span> {/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>State/Province:</label>
+                    <span>{stateProvince}</span>{/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>Country:</label>
+                    <span>{country}</span> {/*RETRIEVED FROM BACKEND QUERY*/}
                     <br/>
                     <br/>
                     <br/>
                     <strong>Contact Information</strong>
                     <br/>
                     <br/>
-                    <label>Phone</label>
-                    <p>{phone}</p>{/*RETRIEVED FROM BACKEND QUERY*/}
                     <br/>
+                    <label>Phone:</label>
+                    <span>{phone}</span>{/*RETRIEVED FROM BACKEND QUERY*/}
                     <br/>
-                    <label>E-mail</label>
-                    <p>{email}</p>{/*RETRIEVED FROM BACKEND QUERY*/}
+                    <label>E-mail:</label>
+                    <span>{email}</span>{/*RETRIEVED FROM BACKEND QUERY*/}
                 </div>
             </div>
+            <CustomFooter/>
+            </>
         )}
     </div>
-    </>  );
+    </>
+    );
 }
- 
+
 export default Profile;

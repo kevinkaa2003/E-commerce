@@ -6,7 +6,7 @@
 
     display: flex;
     justify-content: center; /*Center container horizontally*/
-    
+
 }
 .signupform {
     align-self: center; /*Center container vertically*/
@@ -15,10 +15,17 @@
     border-radius: 15px;
     height: 50vh;
     width: 25vw;
-  
+
 }
 .signupwrapper{
     color: white;
+}
+
+.signupwrapper label {
+    color: white;
+    display: inline-block;
+    width: 100%;
+
 }
 input {
     width: 15vw;

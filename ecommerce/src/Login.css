@@ -6,16 +6,16 @@
 
     display: flex;
     justify-content: center; /*Center container horizontally*/
-    
+
 }
 .loginform {
     align-self: center; /*Center container vertically*/
     align-content: center; /*Center Children vertically*/
     background-color: rgb(52, 50, 50, 0.75);
     border-radius: 15px;
-    height: 50vh;
-    width: 25vw;
-  
+    height: 500px;
+    width: 500px;
+
 }
 .loginwrapper{
     color: white;
@@ -27,11 +27,13 @@ input {
     height: 3vh;
     border-radius: 5px;
 }
+.loginwrapper button {
+    width: 230px;
+    height: 35px;
+}
 .submitbutton {
     line-height: normal;
     background-color: red;
-    width: 15vw;
-    height: 3vh;
     color:white;
     border-radius: 5px;
 }
@@ -39,11 +41,10 @@ input {
     background-color: white;
     color: black;
 }
-.signupbutton{
+.signupbutton {
     line-height: normal;
     background-color: black;
-    width: 15vw;
-    height: 3vh;
+
     color: white;
     border-radius: 5px;
 }

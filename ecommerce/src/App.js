@@ -7,56 +7,46 @@ import Login from './Login.js';
 import SignUp from './SignUp.js';
 import Profile from './Profile.js';
 import Cart from './Cart.js';
-import { DataContext } from './DataProvider.js'
+import { DataContext } from './DataProvider.js';
+import PrivateRoute from './PrivateRoute.js';
+
 
 
 function App() {
+
+  //Obtain userLoggedIn variable from DataProvider Component
   const { userLoggedIn, setUserLoggedIn } = useContext(DataContext);
- 
-   
-  const navigate = useNavigate();
-  const goToHome = () => {
-    navigate('/');
-  };
-  const goToLogin = () => {
-    navigate('/Login');
 
-  };
-
-  useEffect(() => {
-    if (userLoggedIn) {
-      goToHome();
-      
-    } else {
-      goToLogin();
-      
-    }
-  }, [userLoggedIn]);
-
-  const location = useLocation();
-  
-
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [location]);
+  console.log("User Logged In: ", userLoggedIn);
 
 
-  
   return (
-      
+        //Declare Routes
         <div className="App">
             <Routes>
-              <Route path ='/' element = {<Home/>}/>
-              <Route path = '/Contact' element = {<Contact/>}/>
+              <Route path ='/' element = {
+                <PrivateRoute>
+                  <Home/>
+                </PrivateRoute>
+              }/>
               <Route path = '/Login' element = {<Login/>}/>
               <Route path = '/SignUp' element = {<SignUp/>}/>
-              <Route path = '/Profile' element = {<Profile/>}/>
-              <Route path = '/Cart' element= {<Cart/>}/>
+              <Route path = '/Profile' element = {
+                <PrivateRoute>
+                  <Profile/>
+                </PrivateRoute>
+              } />
+              <Route path = '/Cart' element= {
+                <PrivateRoute>
+                 <Cart/>
+                </PrivateRoute>
+                }
+              />
+              <Route path = '/Contact' element = {
+                <PrivateRoute>
+                  <Contact/>
+                </PrivateRoute>
+              }/>
             </Routes>
         </div>
   );

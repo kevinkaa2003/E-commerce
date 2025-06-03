@@ -3,15 +3,18 @@ import city1 from './beijing.jpg';
 import React, { useState, useEffect, useRef,  useContext } from 'react';
 import { DataContext } from './DataProvider.js';
 
+//Shop component
 const Shop = () => {
 
+  //Declare variables
   const [ products, setProducts ] = useState([]);
   const { cartProducts, setCartProducts, addProduct } = useContext(DataContext);
- 
 
 
+  //Function for obtaining product data
   const obtainProductData = async (e) => {
-    
+
+      //Send GET request to backend to obtain profile data
       try {
 
         const response = await fetch('http://localhost:5000/shop',
@@ -26,14 +29,14 @@ const Shop = () => {
 
           const data = await response.json();
 
-          
+          //If a valid response is returned, set products to the data.products obtained.
           if (response.ok) {
             console.log('Product Data Obtained', data);
 
             setProducts(data.products);
             console.log('Shop products set: ', data.products);
-          
-            
+
+
 
           }
           else {
@@ -46,9 +49,9 @@ const Shop = () => {
 
         }
 
-       
+
     };
-    
+
     //Load Shop on page render
    useEffect(() => {
     obtainProductData();
@@ -56,12 +59,13 @@ const Shop = () => {
 
 
   return (
-  <>
-  <div className='shopwrapper'>
-    <br/>
-    <br/>
-    <br/>
-      <strong>SHOP:</strong>
+    <>
+    <div className='shopwrapper'>
+      <div className='shoptitle'>
+          <strong>SHOP</strong>
+      </div>
+      <br/>
+      <br/>
       <div className="product-grid">
           {products.map((product, index) => (
             <div key={index} className="product-card">
@@ -72,13 +76,9 @@ const Shop = () => {
             </div>
           ))}
       </div>
-  </div>
-  <div>
-    
-  </div>
-  </>
+    </div>
+    </>
   );
 }
-  
+
 export default Shop;
-  

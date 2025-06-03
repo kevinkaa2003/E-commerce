@@ -4,12 +4,11 @@ import React, { useEffect, useState, createContext, useContext, useRef } from 'r
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes, Router } from 'react-router-dom';
 import Navbar from './Custom_Navbar.js';
-import News from './News.js';
-import StockCarousel from './StockCarousel.js';
+import CustomFooter from './Custom_Footer.js';
 import { DataContext } from './DataProvider.js';
 import Shop from './Shop.js';
 
-
+//Home component
 const Home = () => {
 
     const servicesRef = useRef(null);
@@ -17,10 +16,11 @@ const Home = () => {
 
     return (
         <>
-            <Navbar></Navbar>
-            <Shop></Shop> 
-        </> 
+        <Navbar></Navbar>
+        <Shop></Shop>
+        <CustomFooter></CustomFooter>
+        </>
     );
 }
- 
+
 export default Home;
